@@ -15,6 +15,17 @@ class Equipamento {
         })
     }
 
+    lista(res){
+        const sql ='SELECT *FROM EQUIPAMENTOS';
+        conexao.query(sql,[], (erro, resultado) =>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }    
+        });
+    }
+
     adicionaTeste(equipamento, res) {
         const dataCriacao = moment().format('YYYY-MM-DD HH:MM:SS')
         const data = moment(equipamento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')

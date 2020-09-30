@@ -6,6 +6,7 @@ class Tabelas {
         this.criarUsuarios();
         this.criarControledEquipamentos();
         this.inserirUsuarios();
+        this.inserirEquipamentos();
     }
 
     criarEquipamentos() {
@@ -50,6 +51,27 @@ class Tabelas {
             }
         })
     }
+
+
+    inserirEquipamentos() {
+        const sql = 
+            `
+            INSERT INTO EQUIPAMENTOS (
+                DESCRICAO, 
+                MODELO,
+                CODIGOCPTM, 
+                FABRICANTE
+            ) SELECT 'MULTIMETRO', '9200297-0', 'fabiolu', '371240' WHERE NOT EXISTS (SELECT * FROM EQUIPAMENTOS WHERE DESCRICAO = 'MULTRIMETRO')
+            `;
+        this.conexao.query(sql, erro => {
+            if(erro) {
+                console.log(erro)
+            } else {
+                console.log('Usuário inserido com sucesso')
+            }
+        })
+    }
+
 
     criarControledEquipamentos() {
         const sql = 'CREATE TABLE IF NOT EXISTS controleEquipamentos (id int NOT NULL AUTO_INCREMENT,USUARIO_FK int, EQUIPAMENTO_FK int, data_entrega datetime, data_retirada datetime  , PRIMARY KEY(id), foreign key(usuario_fk) references usuarios(id), foreign key(equipamento_fk) references equipamentos(id))'
