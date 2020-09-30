@@ -1,13 +1,26 @@
 const moment = require('moment')
 const conexao = require('../infraestrutura/conexao')
 
-class Atendimento {
-    adiciona(atendimento, res) {
+class Equipamento {
+
+    adiciona(equipamento, res){
+        const sql = 'INSERT INTO equipamentos SET ?'
+
+        conexao.query(sql, equipamento, (erro, resultados) => {
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(201).json(equipamento)
+            }
+        })
+    }
+
+    adicionaTeste(equipamento, res) {
         const dataCriacao = moment().format('YYYY-MM-DD HH:MM:SS')
-        const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
+        const data = moment(equipamento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
         
         const dataEhValida = moment(data).isSameOrAfter(dataCriacao)
-        const clienteEhValido = atendimento.cliente.length >= 5
+        const clienteEhValido = equipamento.cliente.length >= 5
 
         const validacoes = [
             {
@@ -28,15 +41,15 @@ class Atendimento {
         if(existemErros) {
             res.status(400).json(erros)
         } else {
-            const atendimentoDatado = {...atendimento, dataCriacao, data}
+            const equipamentoDatado = {...equipamento, dataCriacao, data}
 
-            const sql = 'INSERT INTO Atendimentos SET ?'
+            const sql = 'INSERT INTO equipamentos SET ?'
     
-            conexao.query(sql, atendimentoDatado, (erro, resultados) => {
+            conexao.query(sql, equipamentoDatado, (erro, resultados) => {
                 if(erro) {
                     res.status(400).json(erro)
                 } else {
-                    res.status(201).json(atendimento)
+                    res.status(201).json(equipamento)
                 }
             })
         }
@@ -44,4 +57,4 @@ class Atendimento {
     }
 }
 
-module.exports = new Atendimento
+module.exports = new Equipamento
