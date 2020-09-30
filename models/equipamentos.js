@@ -26,6 +26,44 @@ class Equipamento {
         });
     }
 
+    pesquisarPorId(id, res){
+        const sql = 'select *from equipamentos where id = ?';
+        conexao.query(sql, [id], (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
+   deleta(id, res){
+        const sql = 'delete from equipamentos where id = ?';
+        conexao.query(sql, [id], (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
+
+    atualiza(usuario, id, res){
+        const sql = 'select *from equipamentos';
+        conexao.query(sql, [id], (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
+
+    
+
+
     adicionaTeste(equipamento, res) {
         const dataCriacao = moment().format('YYYY-MM-DD HH:MM:SS')
         const data = moment(equipamento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:MM:SS')
