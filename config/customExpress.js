@@ -1,18 +1,36 @@
-const express = require('express');
-const consign = require('consign');
-const bodyParser = require('body-parser');
-var cors = require('cors');
+const express           = require('express');
+const path	            = require('path');
+const consign           = require('consign');
+const bodyParser        = require('body-parser');
+const cookieParser	    = require('cookie-parser');
+const expressSession	= require('express-session');
+const methodOverride	= require('method-override');
+const jwt               = require('jsonwebtoken');
+
+
 
 module.exports = () => {
 
- const app = express()
- app.use(cors({origin: '*'}));
- app.use(bodyParser.json())
- app.use(bodyParser.urlencoded({ extended: true }))
+	var cors = require('cors');
+	const app = express();
 
- consign()
-   .include('controllers')
-   .into(app)
+	
+
+	app.use(cors({origin: '*'}));
+	app.use(cookieParser('gefi'));
+	app.use(expressSession());
+	app.use(bodyParser.json())
+
+	app.use(bodyParser.urlencoded({ extended: true }))
+	app.use(methodOverride('_method'));
+	
+	consign()
+	.include('models')
+	.then('controllers')
+	.then('routes')
+	.into(app)
+
+
  
  return app
 }

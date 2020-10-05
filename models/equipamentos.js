@@ -36,6 +36,49 @@ class Equipamento {
             }
         });
     }
+    pesquisarPorCodigoCPTM(codigoCPTM, res){
+        const sql = 'select *from equipamentos where codigoCPTM like % ? %';
+        conexao.query(sql, [codigoCPTM], (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
+    pesquisarPorModelo(modelo, res){
+        const sql = 'select *from equipamentos where modelo like % ? %';
+        conexao.query(sql, [modelo], (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
+    pesquisarPorDescricao(descricao, res){
+        const sql = 'select *from equipamentos where descricao like % ? %';
+        conexao.query(sql, [descricao], (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
+    pesquisarPorFabricante(fabricante, res){
+        const sql = 'select *from equipamentos where fabricante like % ? %';
+        conexao.query(sql, [fabricante], (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
 
    deleta(id, res){
         const sql = 'delete from equipamentos where id = ?';
@@ -49,9 +92,10 @@ class Equipamento {
     }
 
 
-    atualiza(usuario, id, res){
-        const sql = 'select *from equipamentos';
-        conexao.query(sql, [id], (erro, resultado)=>{
+    atualiza(equipamento,  res){
+        const sql = 'update equipamentos set descricao = ?, modelo=?, fabricante =?, codigoCPTM=? where id = ?';
+        conexao.query(sql, [equipamento.descricao, equipamento.modelo,
+             equipamento.fabricante, equipamento.codigoCPTM, equipamento.id], (erro, resultado)=>{
             if(erro){
                 res.status(400).json(erro);
             }else{
