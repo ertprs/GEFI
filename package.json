@@ -19,6 +19,7 @@
   "homepage": "https://github.com/binhojulix/gefi.git#readme",
   "dependencies": {
     "consign": "^0.1.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "mysql": "^2.17.1"

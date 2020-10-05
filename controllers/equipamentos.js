@@ -5,13 +5,21 @@ module.exports = app => {
 
 
     app.post('/equipamentos', (req, res) => {
-       const equipamento = req.body
-
+        console.log('oi');
+        const equipamento = req.body
+        console.log(equipamento)
         Equipamento.adiciona(equipamento, res)
     });
 
 
     app.get('/equipamentos', (req, res)=>{
+        console.log('fui chamado');
         Equipamento.lista(res);
+    });
+
+    app.delete('/equipamentos/:id',(req, res)=>{
+        const id = req.param('id');
+        console.log(id);
+        Equipamento.deleta(id, res);
     });
 }
