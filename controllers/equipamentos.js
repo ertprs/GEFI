@@ -1,10 +1,10 @@
 const Equipamento = require('../models/equipamentos')
-
+const autenticador	=	require('../middlewares/autenticador');
 module.exports = (app) => {
 
     //const { Equipamento } = app.models.equipamentos;
 
-    app.get('/', (req, res) => res.send('GEFI'));
+    app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
 
     app.post('/equipamentos', (req, res) => {

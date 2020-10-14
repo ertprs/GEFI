@@ -61,7 +61,7 @@ class Tabelas {
                 MODELO,
                 CODIGOCPTM, 
                 FABRICANTE
-            ) SELECT 'MULTIMETRO', '9200297-0', 'fabiolu', '371240' WHERE NOT EXISTS (SELECT * FROM EQUIPAMENTOS WHERE DESCRICAO = 'MULTRIMETRO')
+            ) SELECT 'MULTIMETRO', 'mx-10', '0678784', 'minipa' WHERE NOT EXISTS (SELECT * FROM EQUIPAMENTOS WHERE DESCRICAO = 'MULTRIMETRO')
             `;
         this.conexao.query(sql, erro => {
             if(erro) {
