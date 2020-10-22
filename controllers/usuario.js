@@ -1,67 +1,63 @@
-const Equipamento = require('../models/usuarios')
+const Usuario = require('../models/usuario')
 const autenticador	=	require('../middlewares/autenticador');
 module.exports = (app) => {
 
-    //const { Equipamento } = app.models.equipamentos;
+    //const { Usuario } = app.models.Usuarios;
 
     app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
 
     app.post('/usuarios', (req, res) => {
-        const equipamento = req.body;
+        const Usuario = req.body;
         console.log("rota de salvar usuarios");
-        Equipamento.adiciona(equipamento, res);
+        Usuario.adiciona(Usuario, res);
     });
 
 
     app.get('/usuarios', (req, res)=>{
         console.log("rota da lista de usuarios");
-        Equipamento.lista(res);
+        Usuario.lista(res);
     });
 
 
-    app.get('/equipamentos/:id', (req, res)=>{
+    app.get('/usuarios/:id', (req, res)=>{
         console.log("rota da pesquisa de usuario por id");
         const id = req.param('id');
-        Equipamento.pesquisarPorId(id, res);
+        Usuario.pesquisarPorId(id, res);
     });
 
     app.get('/usuario/:nome', (req, res)=>{
-        console.log("rota da pesquisa de equipamento por descricao");
-        const descricao = req.param('descricao');
-        Equipamento.pesquisarPorDescricao(descricao, res);
+        console.log("rota da pesquisa de usuario por nome");
+        const nome = req.param('nome');
+        Usuario.pesquisarPorNome(nome, res);
     });
 
     app.get('/usuario/:matricula', (req, res)=>{
         console.log("rota da pesquisa de usuario por matricula");
-        const codigoCPTM = req.param('codigoCPTM');
-        Equipamento.pesquisarPorCodigoCPTM(codigoCPTM, res);
+        const matricula = req.param('matricula');
+        Usuario.pesquisarPorMatricula(matricula, res);
     });
 
     app.get('/usuario/:login', (req, res)=>{
         console.log("rota da pesquisa de de usuario por login ");
-        const fabricante = req.param('fabricante');
-        Equipamento.pesquisarPorFabricante(fabricante, res);
+        const login = req.param('login');
+        Usuario.pesquisarPorLogin(login, res);
     });
 
-    app.get('/equipamentos/:modelo', (req, res)=>{
-        console.log("rota da pesquisa de equipamento por modelo");
-        const modelo = req.param('modelo');
-        Equipamento.pesquisarPorModelo(id, res);
-    });
+  
 
 
-    app.delete('/equipamentos/:id',(req, res)=>{
-        console.log("rota deletar equipamento por id");
+    app.delete('/usuarios/:id',(req, res)=>{
+        console.log("rota deletar usuario por id");
         const id = req.body.id;
-        Equipamento.deleta(id, res);
+        Usuario.deleta(id, res);
     });
 
 
-    app.put('/equipamentos', (req,res) =>{
-        console.log("rota de atualizar o  equipamento");
-        const equipamento = req.body;
-        Equipamento.atualiza(equipamento, res);
+    app.put('/usuarios', (req,res) =>{
+        console.log("rota de atualizar o usuario");
+        const usuario = req.body;
+        Usuario.atualiza(usuario, res);
      
     });
 

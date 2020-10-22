@@ -15,9 +15,10 @@ class Controle {
         });
     }
 
-    salvarControle(Controle, res){
-        const sql = 'insert into controles(nome, matricula, login, senha) values(?,?,?,?,)';
-        conexao.query(sql, Controle,(err, result) =>{
+    salvarControle(controle, res){
+        const sql = 'insert into controles(usuario_fk, equipamento_fk, data_entrega, data_retirada) values(?,?,?,?)';
+     
+        conexao.query(sql, controle,(err, result) =>{
             if(err){
                 res.status(400).json(err);
             }else{
@@ -37,7 +38,7 @@ class Controle {
         })
     }
 
-    listarControle(res){
+    lista(res){
         const sql = 'select *from controles';
         conexao.query(sql, [], (err, results)=>{
             if(err){

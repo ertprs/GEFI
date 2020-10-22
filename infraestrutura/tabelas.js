@@ -4,7 +4,7 @@ class Tabelas {
 
         this.criarEquipamentos();
         this.criarUsuarios();
-        this.criarControledEquipamentos();
+        this.criarControle();
         this.inserirUsuarios();
         this.inserirEquipamentos();
     }
@@ -73,8 +73,8 @@ class Tabelas {
     }
 
 
-    criarControledEquipamentos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS controleEquipamentos (id int NOT NULL AUTO_INCREMENT,USUARIO_FK int, EQUIPAMENTO_FK int, data_entrega datetime, data_retirada datetime  , PRIMARY KEY(id), foreign key(usuario_fk) references usuarios(id), foreign key(equipamento_fk) references equipamentos(id))'
+    criarControle() {
+        const sql = 'CREATE TABLE IF NOT EXISTS controles (id int NOT NULL AUTO_INCREMENT,USUARIO_FK int, EQUIPAMENTO_FK int, data_entrega datetime, data_retirada datetime  , PRIMARY KEY(id), foreign key(usuario_fk) references usuarios(id), foreign key(equipamento_fk) references equipamentos(id))'
 
         this.conexao.query(sql, erro => {
             if(erro) {

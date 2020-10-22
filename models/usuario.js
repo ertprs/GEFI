@@ -37,7 +37,7 @@ class Usuario {
         })
     }
 
-    listarUsuario(res){
+    lista(res){
         const sql = 'select *from usuarios';
         conexao.query(sql, [], (err, results)=>{
             if(err){
