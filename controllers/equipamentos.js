@@ -7,24 +7,43 @@ module.exports = (app) => {
     app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
 
+    //ok
     app.post('/equipamentos', (req, res) => {
         const equipamento = req.body;
         console.log("rota de salvar equipamentos");
         Equipamento.adiciona(equipamento, res);
     });
 
-
+     //ok
     app.get('/equipamentos', (req, res)=>{
         console.log("rota da lista de equipamentos");
         Equipamento.lista(res);
     });
 
+    //ok
+    app.delete('/equipamentos/:id',(req, res)=>{
+        const id = parseInt(req.params.id);
+        console.log(`rota de deletar o  equipamento id=${id}`);
+        Equipamento.deleta(id, res);
+    });
 
+
+    //ok
+    app.patch('/equipamentos/:id', (req,res) =>{
+        const id = parseInt(req.params.id);
+        const equipamento = req.body;
+        console.log(`rota de atualizar equipamento id=${id}`);
+        Equipamento.atualiza(id, equipamento, res);
+     
+    });
+
+    //ok
     app.get('/equipamentos/:id', (req, res)=>{
-        console.log("rota da pesquisa de equipamento por id");
-        const id = req.param('id');
+        const id = parseInt(req.params.id);
+        console.log(`rota de pesquisa de por equipamento id=${id}`);
         Equipamento.pesquisarPorId(id, res);
     });
+
 
     app.get('/equipamentos/:descricao', (req, res)=>{
         console.log("rota da pesquisa de equipamento por descricao");
@@ -51,19 +70,7 @@ module.exports = (app) => {
     });
 
 
-    app.delete('/equipamentos/:id',(req, res)=>{
-        console.log("rota deletar equipamento por id");
-        const id = req.body.id;
-        Equipamento.deleta(id, res);
-    });
-
-
-    app.put('/equipamentos', (req,res) =>{
-        console.log("rota de atualizar o  equipamento");
-        const equipamento = req.body;
-        Equipamento.atualiza(equipamento, res);
-     
-    });
+  
 
 
 

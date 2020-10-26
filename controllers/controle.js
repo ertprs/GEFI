@@ -18,16 +18,7 @@ module.exports = (app) => {
         console.log("rota da lista de controle");
         Controle.lista(res);
     });
-
-
-    app.get('/controle/:id', (req, res)=>{
-        console.log("rota da pesquisa de controle por id");
-        const id = req.param('id');
-        Controle.pesquisarPorId(id, res);
-    });
-
- 
-
+    
     app.delete('/controle/:id',(req, res)=>{
         console.log("rota deletar controle por id");
         const id = req.body.id;
@@ -41,6 +32,16 @@ module.exports = (app) => {
         Controle.atualiza(controle, res);
      
     });
+
+
+    app.get('/controle/:id', (req, res)=>{
+        console.log("rota da pesquisa de controle por id");
+        const id = req.param('id');
+        Controle.pesquisarPorId(id, res);
+    });
+
+ 
+
 
 
 

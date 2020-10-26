@@ -8,9 +8,9 @@ module.exports = (app) => {
 
 
     app.post('/usuarios', (req, res) => {
-        const Usuario = req.body;
+        const usuario = req.body;
         console.log("rota de salvar usuarios");
-        Usuario.adiciona(Usuario, res);
+        Usuario.adiciona(usuario, res);
     });
 
 

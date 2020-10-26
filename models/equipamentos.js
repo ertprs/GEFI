@@ -15,6 +15,17 @@ class Equipamento {
         })
     }
 
+    deleta(id, res){
+        const sql = 'delete from equipamentos where id = ?';
+        conexao.query(sql, id, (erro, resultado)=>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
     lista(res){
         const sql ='SELECT *FROM EQUIPAMENTOS';
         conexao.query(sql,[], (erro, resultado) =>{
@@ -26,9 +37,10 @@ class Equipamento {
         });
     }
 
-    pesquisarPorId(id, res){
-        const sql = 'select *from equipamentos where id = ?';
-        conexao.query(sql, [id], (erro, resultado)=>{
+   
+    atualiza(id, equipamento, res){
+        const sql = 'update equipamentos set ? where id = ?';
+        conexao.query(sql, [equipamento, id], (erro, resultado)=>{
             if(erro){
                 res.status(400).json(erro);
             }else{
@@ -36,6 +48,22 @@ class Equipamento {
             }
         });
     }
+
+
+
+    pesquisarPorId(id, res){
+        const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
+       
+        conexao.query(sql, (erro, resultado) =>{
+            const equipamento = resultado[0];
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(equipamento);
+            }
+        });
+    }
+
     pesquisarPorCodigoCPTM(codigoCPTM, res){
         const sql = 'select *from equipamentos where codigoCPTM like % ? %';
         conexao.query(sql, [codigoCPTM], (erro, resultado)=>{
@@ -80,30 +108,7 @@ class Equipamento {
         });
     }
 
-   deleta(id, res){
-        const sql = 'delete from equipamentos where id = ?';
-        conexao.query(sql, [id], (erro, resultado)=>{
-            if(erro){
-                res.status(400).json(erro);
-            }else{
-                res.status(201).json(resultado);
-            }
-        });
-    }
-
-
-    atualiza(equipamento,  res){
-        const sql = 'update equipamentos set descricao = ?, modelo=?, fabricante =?, codigoCPTM=? where id = ?';
-        conexao.query(sql, [equipamento.descricao, equipamento.modelo,
-             equipamento.fabricante, equipamento.codigoCPTM, equipamento.id], (erro, resultado)=>{
-            if(erro){
-                res.status(400).json(erro);
-            }else{
-                res.status(201).json(resultado);
-            }
-        });
-    }
-
+  
 
     
 

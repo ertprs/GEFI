@@ -15,9 +15,11 @@ class Controle {
         });
     }
 
-    salvarControle(controle, res){
-        const sql = 'insert into controles(usuario_fk, equipamento_fk, data_entrega, data_retirada) values(?,?,?,?)';
-     
+    adiciona(controle, res){
+        const sql = 'insert into controles set ?';
+        const dataRetirada = new Date();
+        controle.dataRetirada = dataRetirada;
+
         conexao.query(sql, controle,(err, result) =>{
             if(err){
                 res.status(400).json(err);
