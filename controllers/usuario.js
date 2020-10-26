@@ -21,46 +21,34 @@ module.exports = (app) => {
 
 
     app.get('/usuarios/:id', (req, res)=>{
-        console.log("rota da pesquisa de usuario por id");
-        const id = req.param('id');
+        const id = parseInt(req.params.id);
+        console.log(`rota da pesquisa de usuario por id=${id}`);
         Usuario.pesquisarPorId(id, res);
     });
 
-    app.get('/usuario/:nome', (req, res)=>{
-        console.log("rota da pesquisa de usuario por nome");
-        const nome = req.param('nome');
-        Usuario.pesquisarPorNome(nome, res);
-    });
-
-    app.get('/usuario/:matricula', (req, res)=>{
-        console.log("rota da pesquisa de usuario por matricula");
-        const matricula = req.param('matricula');
-        Usuario.pesquisarPorMatricula(matricula, res);
-    });
-
-    app.get('/usuario/:login', (req, res)=>{
-        console.log("rota da pesquisa de de usuario por login ");
-        const login = req.param('login');
-        Usuario.pesquisarPorLogin(login, res);
-    });
-
-  
-
 
     app.delete('/usuarios/:id',(req, res)=>{
-        console.log("rota deletar usuario por id");
-        const id = req.body.id;
+        const id = parseInt(req.params.id);
+        console.log(`rota de deletar o  equipamento id=${id}`);
         Usuario.deleta(id, res);
     });
 
 
-    app.put('/usuarios', (req,res) =>{
-        console.log("rota de atualizar o usuario");
+    app.patch('/usuarios/:id', (req,res) =>{
+        const id = parseInt(req.params.id);
         const usuario = req.body;
-        Usuario.atualiza(usuario, res);
-     
+        console.log(`rota de atualizar usuario id=${id}`);
+        Usuario.atualiza(id, usuario, res);
     });
 
+
+    app.get('/usuario/:login', (req, res)=>{
+        console.log("rota da pesquisa de de usuario por login ");
+        const usuario = req.body;
+        Usuario.pesquisarPorLogineSenha(usuario, res);
+    });
+
+  
 
 
 

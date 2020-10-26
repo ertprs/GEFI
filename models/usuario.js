@@ -29,9 +29,9 @@ class Usuario {
     }
 
     
-    deletarUsuario(id, res){
+    deleta(id, res){
         const sql = 'delete from usuarios where id = ?';
-        conexao.query(sql, [id], (err, results) =>{
+        conexao.query(sql, id, (err, results) =>{
             if(err){
                 res.status(400).json(err);
             }else{
@@ -52,10 +52,9 @@ class Usuario {
     }
 
 
-    atualizarUsuario(usuario, res){
-        const sql = 'update usuarios set nome=?, matricula=?, login=?, senha=? where id=?';
-        conexao.query(sql, [usuario.nome, usuario.matricula, usuario.login,
-            usuario.senha, usuario.id], (err, results)=>{
+    atualiza(id, usuario, res){
+        const sql = 'update usuarios set ? where id=?';
+        conexao.query(sql, [usuario, id], (err, results)=>{
             if(err){
                 res.status(400).json(err);
             }else{
