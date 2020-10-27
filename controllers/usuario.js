@@ -6,6 +6,7 @@ module.exports = (app) => {
 
     app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
+  
 
     app.post('/usuarios', (req, res) => {
         const usuario = req.body;
@@ -42,13 +43,12 @@ module.exports = (app) => {
     });
 
 
-    app.get('/usuario/:login', (req, res)=>{
+    app.get('/usuario/autenticar/:login/:senha', (req, res)=>{
         console.log("rota da pesquisa de de usuario por login ");
         const usuario = req.body;
-        Usuario.pesquisarPorLogineSenha(usuario, res);
+        Usuario.pesquisarPorLoginESenha(usuario, res);
     });
 
-  
 
 
 

@@ -4,9 +4,9 @@ const conexao = require('../infraestrutura/conexao')
 class Controle {
 
     
-    pesquisarPorId(Controle, res){
-        const sql = 'select *from controles where login = ? and senha = ? ';
-        conexao.query(sql, [Controle.login, Controle.senha], (erro, resultado)=>{
+    pesquisarPorId(id, res){
+        const sql = 'select *from controles where id = ? ';
+        conexao.query(sql, id, (erro, resultado)=>{
             if(erro){
                 res.status(400).json(erro);
             }else{
@@ -17,9 +17,6 @@ class Controle {
 
     adiciona(controle, res){
         const sql = 'insert into controles set ?';
-        const dataRetirada = new Date();
-        controle.dataRetirada = dataRetirada;
-
         conexao.query(sql, controle,(err, result) =>{
             if(err){
                 res.status(400).json(err);
@@ -29,7 +26,7 @@ class Controle {
         });
     }
 
-    deletarControle(id, res){
+    deleta(id, res){
         const sql = 'delete from controles where id = ?';
         conexao.query(sql, [id], (err, results) =>{
             if(err){
@@ -52,10 +49,9 @@ class Controle {
     }
 
 
-    atualizarControle(Controle, res){
-        const sql = 'update controles set nome=?, matricula=?, login=?, senha=? where id=?';
-        conexao.query(sql, [Controle.nome, Controle.matricula, Controle.login,
-            Controle.senha, Controle.id], (err, results)=>{
+    atualiza(controle, id, res){
+        const sql = 'update controles set ? where id=?';
+        conexao.query(sql, [controle, id], (err, results)=>{
             if(err){
                 res.status(400).json(err);
             }else{

@@ -9,6 +9,8 @@ module.exports = (app) => {
 
     app.post('/controle', (req, res) => {
         const controle = req.body;
+        const dataRetirada = new Date();
+        controle.dataRetirada = dataRetirada;
         console.log("rota de salvar controle");
         Controle.adiciona(controle, res);
     });
@@ -29,7 +31,7 @@ module.exports = (app) => {
     app.put('/controle', (req,res) =>{
         console.log("rota de atualizar o controle");
         const controle = req.body;
-        Controle.atualiza(controle, res);
+        Controle.atualiza(controle, id, res);
      
     });
 

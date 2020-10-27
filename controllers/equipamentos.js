@@ -4,7 +4,7 @@ module.exports = (app) => {
 
     //const { Equipamento } = app.models.equipamentos;
 
-    app.get('/', autenticador,(req, res) => res.send('GEFI'));
+    
 
 
     //ok
@@ -43,36 +43,5 @@ module.exports = (app) => {
         console.log(`rota de pesquisa de por equipamento id=${id}`);
         Equipamento.pesquisarPorId(id, res);
     });
-
-
-    app.get('/equipamentos/:descricao', (req, res)=>{
-        console.log("rota da pesquisa de equipamento por descricao");
-        const descricao = req.param('descricao');
-        Equipamento.pesquisarPorDescricao(descricao, res);
-    });
-
-    app.get('/equipamentos/:codigoCPTM', (req, res)=>{
-        console.log("rota da pesquisa de equipamento por codigoCPTM");
-        const codigoCPTM = req.param('codigoCPTM');
-        Equipamento.pesquisarPorCodigoCPTM(codigoCPTM, res);
-    });
-
-    app.get('/equipamentos/:fabricante', (req, res)=>{
-        console.log("rota da pesquisa de equipamento por fabricante");
-        const fabricante = req.param('fabricante');
-        Equipamento.pesquisarPorFabricante(fabricante, res);
-    });
-
-    app.get('/equipamentos/:modelo', (req, res)=>{
-        console.log("rota da pesquisa de equipamento por modelo");
-        const modelo = req.param('modelo');
-        Equipamento.pesquisarPorModelo(id, res);
-    });
-
-
-  
-
-
-
 
 }

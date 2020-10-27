@@ -5,6 +5,7 @@ const bodyParser        = require('body-parser');
 const cookieParser	    = require('cookie-parser');
 const expressSession	= require('express-session');
 const methodOverride	= require('method-override');
+require("dotenv-safe").config();
 const jwt               = require('jsonwebtoken');
 
 
@@ -28,6 +29,8 @@ module.exports = () => {
 	.include('models')
 	.then('controllers')
 	.into(app)
+
+
 
 
  
