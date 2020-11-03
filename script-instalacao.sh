@@ -1,8 +1,11 @@
 
 sudo apt update
 sudo apt upgrade
+
 sudo apt install git
 git --version
+
+git clone https://github.com/binhojulix/gefi.git
 
 sudo apt install nodejs
 
@@ -11,6 +14,13 @@ sudo apt install npm
 nodejs -v
 
 npm -v
+
+sudo npm install -g @angular/cli
+
+cd gefi
+
+npm install
+
 
 
 
@@ -27,3 +37,14 @@ exit;
 
 GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password';
 exit;
+
+
+sudo apt install build-essential
+
+sudo npm install pm2@latest -g
+
+pm2 start server.js
+
+pm2 startup systemd
+
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
