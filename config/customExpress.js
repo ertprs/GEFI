@@ -25,6 +25,7 @@ module.exports = () => {
 	app.use(bodyParser.urlencoded({ extended: true }))
 	app.use(methodOverride('_method'));
 
+
 	app.get('/', (req,res) => {
 		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
 	  });
@@ -44,6 +45,15 @@ module.exports = () => {
 	app.get('/usuario', (req,res) => {
 		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
 	});
+
+	app.get('/login', (req,res) => {
+		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+	});
+
+	app.get('*', function(req, res){
+		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+	  });
+
 
 	consign()
 	.include('models')
