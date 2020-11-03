@@ -1,11 +1,11 @@
 
-sudo apt update
-sudo apt upgrade
+#sudo apt update
+#sudo apt upgrade
 
-sudo apt install git
-git --version
+#sudo apt install git
+#git --version
 
-git clone https://github.com/binhojulix/gefi.git
+#git clone https://github.com/binhojulix/gefi.git
 
 sudo apt install nodejs
 
