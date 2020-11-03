@@ -4,7 +4,7 @@ module.exports = (app) => {
 
     //const { Usuario } = app.models.Usuarios;
 
-    app.get('/', autenticador,(req, res) => res.send('GEFI'));
+    //app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
   
 

@@ -4,7 +4,7 @@ module.exports = (app) => {
 
     //const { Equipamento } = app.models.controle;
 
-    app.get('/', autenticador,(req, res) => res.send('GEFI'));
+   // app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
 
     app.post('/controle', (req, res) => {
