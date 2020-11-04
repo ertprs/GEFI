@@ -7,36 +7,36 @@
 
 #git clone https://github.com/binhojulix/gefi.git
 
-sudo apt install nodejs
+#sudo apt install nodejs
 
-sudo apt install npm
+#sudo apt install npm
 
-nodejs -v
+#nodejs -v
 
-npm -v
+#npm -v
 
-sudo npm install -g @angular/cli
+#sudo npm install -g @angular/cli
 
 cd gefi
 
-npm install
+#npm install
 
 
 
 
 
 
-sudo apt install mysql-server
-sudo mysql_secure_installation
+#sudo apt install mysql-server
+#sudo mysql_secure_installation
 
-sudo mysql
+#sudo mysql
 
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-FLUSH PRIVILEGES;
-exit;
+#ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+#FLUSH PRIVILEGES;
+#exit;
 
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password';
-exit;
+#GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password';
+#exit;
 
 
 sudo apt install build-essential

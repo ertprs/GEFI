@@ -22,7 +22,7 @@ class Tabelas {
     }
 
     criarUsuarios() {
-        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(50) UNIQUE, matricula varchar(20) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id))'
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), PRIVILEGIO VARCHAR(4))'
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -40,8 +40,9 @@ class Tabelas {
                 nome, 
                 matricula,
                 login, 
-                senha
-            ) SELECT 'Fabio Julio', '9200297-0', 'fabiolu', '371240' WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'fabiolu')
+                senha,
+                privilegio
+            ) SELECT 'Fabio Julio', '9200297-0', 'fabiolu', '371240', 'admin' WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'fabiolu')
             `;
         this.conexao.query(sql, erro => {
             if(erro) {
