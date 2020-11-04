@@ -6,12 +6,23 @@ const conexao = require('../infraestrutura/conexao')
 
 module.exports = (app) => {
 
-    app.get('/teste', autenticador,(req, res) => {
-        res.status(500).json({message: 'Login válido!'});
+
+    app.get('/', (req,res) => {
+		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+	  });
+
+	app.get('/home', (req,res) => {
+		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+	});
+
+    
+    app.get('/login', (req,res) => {
+		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
     });
+    
 
 
-    app.post('/login', (req, res) => {
+    app.post('/autenticar', (req, res) => {
 
         login = req.body.login;
         senha = req.body.senha;
@@ -50,11 +61,12 @@ module.exports = (app) => {
 
 
 
-
-
     app.post('/logout', (req, res)=>{
         res.json({ auth: false, token: null });
     });
 
 
+
+      
+  
 }

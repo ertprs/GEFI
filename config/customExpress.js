@@ -26,35 +26,6 @@ module.exports = () => {
 	app.use(methodOverride('_method'));
 
 
-	app.get('/', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
-	  });
-
-	app.get('/home', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
-	});
-
-	app.get('/controle', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
-	});
-
-	app.get('/equipamento', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
-	});
-
-	app.get('/usuario', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
-	});
-
-	app.get('/login', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
-	});
-
-	app.get('*', function(req, res){
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
-	  });
-
-
 	consign()
 	.include('models')
 	.then('controllers')

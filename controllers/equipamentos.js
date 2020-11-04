@@ -4,7 +4,10 @@ module.exports = (app) => {
 
     //const { Equipamento } = app.models.equipamentos;
 
-    
+
+    app.get('/equipamento', (req,res) => {
+		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+	});
 
 
     //ok
@@ -37,11 +40,6 @@ module.exports = (app) => {
      
     });
 
-    //ok
-    app.get('/equipamentos/:id', (req, res)=>{
-        const id = parseInt(req.params.id);
-        console.log(`rota de pesquisa de por equipamento id=${id}`);
-        Equipamento.pesquisarPorId(id, res);
-    });
+ 
 
 }

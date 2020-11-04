@@ -6,8 +6,14 @@ module.exports = (app) => {
 
    // app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
+  
+   app.get('/controle', (req,res) => {
+    res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
 
-    app.post('/controle', (req, res) => {
+    });
+
+
+    app.post('/controles', (req, res) => {
         const controle = req.body;
         const dataRetirada = new Date();
         controle.dataRetirada = dataRetirada;
@@ -16,19 +22,19 @@ module.exports = (app) => {
     });
 
 
-    app.get('/controle', (req, res)=>{
+    app.get('/controles', (req, res)=>{
         console.log("rota da lista de controle");
         Controle.lista(res);
     });
     
-    app.delete('/controle/:id',(req, res)=>{
+    app.delete('/controles/:id',(req, res)=>{
         console.log("rota deletar controle por id");
         const id = req.body.id;
         Controle.deleta(id, res);
     });
 
 
-    app.put('/controle', (req,res) =>{
+    app.put('/controles', (req,res) =>{
         console.log("rota de atualizar o controle");
         const controle = req.body;
         Controle.atualiza(controle, id, res);
@@ -36,7 +42,7 @@ module.exports = (app) => {
     });
 
 
-    app.get('/controle/:id', (req, res)=>{
+    app.get('/controles/:id', (req, res)=>{
         console.log("rota da pesquisa de controle por id");
         const id = req.param('id');
         Controle.pesquisarPorId(id, res);

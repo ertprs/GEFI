@@ -6,7 +6,9 @@ module.exports = (app) => {
 
     //app.get('/', autenticador,(req, res) => res.send('GEFI'));
 
-  
+    app.get('/usuario', (req,res) => {
+		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+	});
 
     app.post('/usuarios', (req, res) => {
         const usuario = req.body;
@@ -43,15 +45,6 @@ module.exports = (app) => {
         console.log(`rota de atualizar usuario id=${id}`);
         Usuario.atualiza(id, usuario, res);
     });
-
-
-    app.get('/usuario/autenticar/:login/:senha', (req, res)=>{
-        console.log("rota da pesquisa de de usuario por login ");
-        const usuario = req.body;
-        Usuario.pesquisarPorLoginESenha(usuario, res);
-    });
-
-
 
 
 }
