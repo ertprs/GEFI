@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "pm2 start server.js --name gefi",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
