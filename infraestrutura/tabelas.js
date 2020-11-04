@@ -12,9 +12,9 @@ class Tabelas {
        
         this.inserirDepartamento();
         this.inserirArea();
-        this.inserirSetor();
         this.inserirCargos();
         this.inserirUsuarios();
+        this.inserirSetor();
         this.inserirEquipamentos();
        
         
@@ -88,7 +88,7 @@ class Tabelas {
 
 
     criarEquipamentos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS equipamentos (id int NOT NULL AUTO_INCREMENT, descricao varchar(50) NOT NULL, fabricante varchar(50), modelo varchar(50) NOT NULL, codigoCPTM varchar(20) NOT NULL UNIQUE, PRIMARY KEY(id))'
+        const sql = 'CREATE TABLE IF NOT EXISTS equipamentos (id int NOT NULL AUTO_INCREMENT, descricao varchar(50) NOT NULL, fabricante varchar(50), modelo varchar(50) NOT NULL, codigoCPTM varchar(20) NOT NULL UNIQUE, PRIMARY KEY(id), STATUS VARCHAR(20))'
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -98,6 +98,9 @@ class Tabelas {
             }
         })
     }
+
+
+
 
     
 
@@ -144,8 +147,9 @@ class Tabelas {
                 DESCRICAO, 
                 MODELO,
                 CODIGOCPTM, 
-                FABRICANTE
-            ) SELECT 'MULTIMETRO', 'mx-10', '0678784', 'minipa' WHERE NOT EXISTS (SELECT * FROM EQUIPAMENTOS WHERE DESCRICAO = 'MULTRIMETRO')
+                FABRICANTE,
+                STATUS
+            ) SELECT 'MULTIMETRO', 'mx-10', '0678784', 'minipa', 'Disponivel' WHERE NOT EXISTS (SELECT * FROM EQUIPAMENTOS WHERE DESCRICAO = 'MULTRIMETRO')
             `;
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -183,7 +187,7 @@ class Tabelas {
             if(erro) {
                 console.log(erro)
             } else {
-                console.log('Departamentos inserido com sucesso')
+                console.log('Departamento inserido com sucesso')
             }
         })
     }
@@ -205,18 +209,13 @@ class Tabelas {
     }
 
     inserirSetor() {
-        const sql = 
-            `
-            INSERT INTO SETORES (
-                USUARIO_FK, 
-                AREA_FK
-            ) SELECT 1, 1 WHERE NOT EXISTS (SELECT * FROM SETORES WHERE ID = 1)
-            `;
+        const sql = `INSERT INTO SETORES ( USUARIO_FK,  AREA_FK
+            ) SELECT 1, 1 WHERE NOT EXISTS (SELECT * FROM SETORES WHERE USUARIO_FK = 1 AND AREA_FK = 1)`;
         this.conexao.query(sql, erro => {
             if(erro) {
                 console.log(erro)
             } else {
-                console.log('Usuário inserido com sucesso')
+                console.log('SETOR inserido com sucesso')
             }
         })
     }
