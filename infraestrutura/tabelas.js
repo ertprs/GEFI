@@ -22,7 +22,7 @@ class Tabelas {
     }
 
     criarDepartamentos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS DEPARTAMENTOS (id int NOT NULL AUTO_INCREMENT, SIGLA VARCHAR(4), DESCRICAO VARCHAR(50), PRIMARY KEY(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS departamentos (id int NOT NULL AUTO_INCREMENT, sigla VARCHAR(4), descricao VARCHAR(50), PRIMARY KEY(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -34,7 +34,7 @@ class Tabelas {
     }
 
     criarAreas() {
-        const sql = 'CREATE TABLE IF NOT EXISTS AREAS (id int NOT NULL AUTO_INCREMENT, DEPARTAMENTO_FK INT, DESCRICAO VARCHAR(50), PRIMARY KEY(id), foreign key(DEPARTAMENTO_FK) references DEPARTAMENTOS(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS areas (id int NOT NULL AUTO_INCREMENT, departamento_fk INT, descricao VARCHAR(50), PRIMARY KEY(id), foreign key(DEPARTAMENTO_FK) references DEPARTAMENTOS(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -47,7 +47,7 @@ class Tabelas {
     }
 
     criarCargos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS CARGOS (id int NOT NULL AUTO_INCREMENT, descricao varchar(100) NOT NULL, PRIMARY KEY(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS cargos (id int NOT NULL AUTO_INCREMENT, descricao varchar(100) NOT NULL, PRIMARY KEY(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -61,7 +61,7 @@ class Tabelas {
 
 
     criarUsuarios() {
-        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), PRIVILEGIO VARCHAR(5), CARGO_fk int, foreign key(cargo_fk) references cargos(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), privilegio VARCHAR(5), cargo_fk int, foreign key(cargo_fk) references cargos(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) { 
@@ -74,7 +74,7 @@ class Tabelas {
 
 
     criarSetor() {
-        const sql = 'CREATE TABLE IF NOT EXISTS SETORES (id int NOT NULL AUTO_INCREMENT,  usuario_fk int, area_fk int, PRIMARY KEY(id), foreign key(area_fk) references AREAS(id), foreign key(usuario_fk) references USUARIOS(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS setores (id int NOT NULL AUTO_INCREMENT,  usuario_fk int, area_fk int, PRIMARY KEY(id), foreign key(area_fk) references AREAS(id), foreign key(usuario_fk) references usuarios(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) {
