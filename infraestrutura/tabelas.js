@@ -6,7 +6,7 @@ class Tabelas {
         this.criarAreas();
         this.criarCargos();
         this.criarUsuarios();
-        this.criarSetor();
+      
         this.criarEquipamentos();
         this.criarControle();
        
@@ -14,7 +14,7 @@ class Tabelas {
         this.inserirArea();
         this.inserirCargos();
         this.inserirUsuarios();
-        this.inserirSetor();
+     
         this.inserirEquipamentos();
        
         
@@ -61,7 +61,7 @@ class Tabelas {
 
 
     criarUsuarios() {
-        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), privilegio VARCHAR(5), cargo_fk int, foreign key(cargo_fk) references cargos(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), privilegio VARCHAR(5), cargo_fk int, foreign key(cargo_fk) references cargos(id), area_fk int, foreign key(area_fk) references areas(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) { 
@@ -72,19 +72,6 @@ class Tabelas {
         })
     }
 
-
-    criarSetor() {
-        const sql = 'CREATE TABLE IF NOT EXISTS setores (id int NOT NULL AUTO_INCREMENT,  usuario_fk int, area_fk int, PRIMARY KEY(id), foreign key(area_fk) references AREAS(id), foreign key(usuario_fk) references usuarios(id))';
-
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('Tabela setor criada com sucesso')
-            }
-        })
-
-    }
 
 
     criarEquipamentos() {
@@ -127,8 +114,9 @@ class Tabelas {
                 login, 
                 senha,
                 privilegio,
-                cargo_fk
-            ) SELECT 'Fabio Julio', '9200297-0', 'fabiolu', '12345', 'admin', 1 WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'fabiolu')
+                cargo_fk,
+                area_fk
+            ) SELECT 'Fabio Julio', '9200297-0', 'fabiolu', '12345', 'admin', 1, 1 WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'fabiolu')
             `;
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -196,8 +184,9 @@ class Tabelas {
         const sql = 
             `
             INSERT INTO AREAS (
-                DESCRICAO
-            ) SELECT 'LABORATORIO DE SISTEMAS ELETRONICOS' WHERE NOT EXISTS (SELECT * FROM AREAS WHERE DESCRICAO = 'LABORATORIO DE SISTEMAS ELETRONICOS')
+                DESCRICAO,
+                departamento_fk
+            ) SELECT 'LABORATORIO DE SISTEMAS ELETRONICOS', 1 WHERE NOT EXISTS (SELECT * FROM AREAS WHERE DESCRICAO = 'LABORATORIO DE SISTEMAS ELETRONICOS')
             `;
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -207,19 +196,6 @@ class Tabelas {
             }
         })
     }
-
-    inserirSetor() {
-        const sql = `INSERT INTO SETORES ( USUARIO_FK,  AREA_FK
-            ) SELECT 1, 1 WHERE NOT EXISTS (SELECT * FROM SETORES WHERE USUARIO_FK = 1 AND AREA_FK = 1)`;
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('SETOR inserido com sucesso')
-            }
-        })
-    }
-
 
     
 

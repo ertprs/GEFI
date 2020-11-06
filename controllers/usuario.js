@@ -13,7 +13,6 @@ module.exports = (app) => {
     app.post('/usuarios', (req, res) => {
         const usuario = req.body;
         usuario.senha = 'gefi';
-        usuario.privilegio = 'user';
         console.log("rota de salvar usuarios");
         Usuario.adiciona(usuario, res);
     });

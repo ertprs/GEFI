@@ -64,6 +64,19 @@ class Area {
         });
     }
 
+    pesquisarPorDepartamento(departamento_fk, res){
+        const sql = `SELECT * FROM areas WHERE departamento_fk=${departamento_fk}`;
+       
+        conexao.query(sql, (erro, resultado) =>{
+          
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }
+        });
+    }
+
    
 }
 

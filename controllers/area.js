@@ -13,7 +13,7 @@ module.exports = (app) => {
     app.get('/areas/:id', (req, res)=>{
         const id = parseInt(req.params.id);
         console.log(`rota da pesquisa de area por id=${id}`);
-        Area.pesquisarPorId(id, res);
+        Area.pesquisarPorDepartamento(id, res);
     });
 
 
