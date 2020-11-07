@@ -61,7 +61,7 @@ class Tabelas {
 
 
     criarUsuarios() {
-        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), privilegio VARCHAR(5), cargo_fk int, foreign key(cargo_fk) references cargos(id), area_fk int, foreign key(area_fk) references areas(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), privilegio VARCHAR(5), cargo_fk int, foreign key(cargo_fk) references cargos(id), area_fk int, foreign key(area_fk) references areas(id), trocar_senha BIT)';
 
         this.conexao.query(sql, erro => {
             if(erro) { 
@@ -75,7 +75,7 @@ class Tabelas {
 
 
     criarEquipamentos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS equipamentos (id int NOT NULL AUTO_INCREMENT, descricao varchar(50) NOT NULL, fabricante varchar(50), modelo varchar(50) NOT NULL, codigoCPTM varchar(20) NOT NULL UNIQUE, PRIMARY KEY(id), status VARCHAR(20))'
+        const sql = 'CREATE TABLE IF NOT EXISTS equipamentos (id int NOT NULL AUTO_INCREMENT, descricao varchar(50) NOT NULL, fabricante varchar(50), modelo varchar(50) NOT NULL, codigoCPTM varchar(20) NOT NULL UNIQUE, PRIMARY KEY(id), status VARCHAR(20), area_fk int, foreign key(area_fk) references areas(id))'
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -115,8 +115,9 @@ class Tabelas {
                 senha,
                 privilegio,
                 cargo_fk,
-                area_fk
-            ) SELECT 'Fabio Julio', '9200297-0', 'fabiolu', '12345', 'admin', 1, 1 WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'fabiolu')
+                area_fk,
+                trocar_senha
+            ) SELECT 'Fabio Julio', '9200297-0', 'fabiolu', '12345', 'admin', 1, 1, 1 WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'fabiolu')
             `;
         this.conexao.query(sql, erro => {
             if(erro) {

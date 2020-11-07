@@ -42,6 +42,8 @@ module.exports = (app) => {
                           });
                      
                         const retorno = {};
+                        retorno.privilegio =resultado[0].privilegio;
+                        retorno.area_fk =resultado[0].area_fk;
                         retorno.token = token;
                         retorno.auth = true;
                         retorno.login = resultado[0].login;
