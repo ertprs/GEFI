@@ -47,6 +47,9 @@ module.exports = (app) => {
                         retorno.token = token;
                         retorno.auth = true;
                         retorno.login = resultado[0].login;
+                        retorno.status = res.status;
+                        retorno.id = resultado[0].id;
+                        
                         console.log(retorno)
                         res.status(201).json(retorno);
                     }else{

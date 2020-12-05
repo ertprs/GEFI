@@ -14,8 +14,9 @@ class Tabelas {
         this.inserirArea();
         this.inserirCargos();
         this.inserirUsuarios();
-     
+
         this.inserirEquipamentos();
+        this.criarMeusEquipamentos();
        
         
         
@@ -85,6 +86,20 @@ class Tabelas {
             }
         })
     }
+
+    criarMeusEquipamentos(){
+
+            const sql = 'create table meusEquipamentos(id int primary key auto_increment, usuario_fk int, equipamento_fk int, foreign key(usuario_fk) references usuarios(id), foreign key(equipamento_fk) references equipamentos(id), ultimaRevisao date)'
+
+            this.conexao.query(sql, erro => {
+                if(erro) {
+                    console.log(erro)
+                } else {
+                    console.log('Tabela Equipamentos criada com sucesso')
+                }
+            })
+   
+        }
 
 
 
