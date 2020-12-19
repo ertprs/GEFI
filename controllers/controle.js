@@ -58,31 +58,37 @@ module.exports = (app) => {
     });
 
 
-    app.get('/controles/controles/:id', (req, res)=>{
+    app.get('/controles/devolver-equipamento', (req, res)=>{
         console.log("rota - Devolve Equipamento");
         const id = req.param('id');
         Controle.devolveEquipamento(res);
     });
 
-    app.get('/controles/controles/:id', (req, res)=>{
+
+    app.get('/controles/requisitar-equipamento', (req, res)=>{
         console.log("rota - Requisita Equipamento");
         const id = req.param('id');
         Controle.requisitaEquipamento(res);
     });
 
-    app.get('/controles/controles/:id', (req, res)=>{
+    
+
+    app.get('/controles/listar-equipamentos-disponiveis-por-area', (req, res)=>{
         console.log("rota - lista equipamentos disponiveis por área");
         const id = req.param('id');
         Controle.listaEquipamentosDisponiveisPorArea(res);
     });
 
-    app.get('/controles/controles/:id', (req, res)=>{
+
+    app.get('/controles/listar-equipamentos-requisitados-por-usuario', (req, res)=>{
         console.log("rota - lista equipamentos requisitados pelo usuário");
         const id = req.param('id');
-        Controle.listaEquipamentosComFalha(res);
+        Controle.listaEquipamentosRequisitadosPeloUsuario(res);
     });
 
-    app.get('/controles/controles/:id', (req, res)=>{
+
+
+    app.get('/controles/tratar-falha', (req, res)=>{
         console.log("rota - trata falha");
         const id = req.param('id');
         Controle.trataFalha(res);
@@ -91,7 +97,7 @@ module.exports = (app) => {
     app.get('/controles/listar-equipamentos-com-falha-por-usuario', (req, res)=>{
         console.log("rota - lista equipamentos com falha");
         const id = req.param('id');
-        Controle.listaEquipamentosComFalha(res);
+        Controle.listaEquipamentosComFalhaPorArea(res);
     });
 
     app.get('/controles/lista-equipamentos-requisitados-por-area', (req, res)=>{
@@ -99,6 +105,13 @@ module.exports = (app) => {
         const id = req.param('id');
         Controle.listaRequisicoesPorArea(res);
     });
+
+    app.get('/controles/notifica-gestor', (req, res)=>{
+        console.log("rota - lista requisicoes por área");
+        const id = req.param('id');
+        Controle.notificaGestor(res);
+    });
+
 
 
  

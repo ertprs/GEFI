@@ -3,21 +3,6 @@ const conexao = require('../infraestrutura/conexao')
 
 class Controle {
 
-
-    listaRequisicoesPorArea(){
-
-        const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
-       
-        conexao.query(sql, (erro, resultado) =>{
-            const equipamento = resultado[0];
-            if(erro){
-                res.status(400).json(erro);
-            }else{
-                res.status(201).json(equipamento);
-            }
-        });
-    }
-    
     devolveEquipamento(res){
 
         const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
@@ -47,21 +32,6 @@ class Controle {
 
     }
 
-    trataFalha(res){
-
-        const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
-       
-        conexao.query(sql, (erro, resultado) =>{
-            const equipamento = resultado[0];
-            if(erro){
-                res.status(400).json(erro);
-            }else{
-                res.status(201).json(equipamento);
-            }
-        });
-
-    }
-
     listaEquipamentosDisponiveisPorArea(res){
 
         const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
@@ -77,6 +47,8 @@ class Controle {
 
     }
 
+
+   
     listaEquipamentosRequisitadosPeloUsuario(res){
 
         const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
@@ -92,7 +64,7 @@ class Controle {
 
     }
 
-    listaEquipamentosComFalha(res){
+    trataFalha(res){
 
         const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
        
@@ -107,8 +79,37 @@ class Controle {
 
     }
 
+    listaEquipamentosComFalhaPorArea(res){
 
-    
+        const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
+       
+        conexao.query(sql, (erro, resultado) =>{
+            const equipamento = resultado[0];
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(equipamento);
+            }
+        });
+
+    }
+
+    listaRequisicoesPorArea(){
+
+        const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
+       
+        conexao.query(sql, (erro, resultado) =>{
+            const equipamento = resultado[0];
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(equipamento);
+            }
+        });
+    }
+
+
+
     pesquisarPorId(id, res){
 
         const sql = 'select *from controles where id = ? ';
