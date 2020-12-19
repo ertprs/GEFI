@@ -6,21 +6,21 @@ const conexao = require('../infraestrutura/conexao')
 
 module.exports = (app) => {
 
+    const publicFolder = 'process.cwd()+"/public/gefi-web/dist/gefi-web/';
 
     app.get('/', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+		res.sendFile(`${publicFolder}/index.html`);
 	  });
 
 	app.get('/home', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+		res.sendFile(`${publicFolder}/index.html`);
 	});
 
     
     app.get('/login', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+		res.sendFile(`${publicFolder}/index.html`);
     });
     
-
 
     app.post('/autenticar', (req, res) => {
 
@@ -49,14 +49,13 @@ module.exports = (app) => {
                         retorno.login = resultado[0].login;
                         retorno.status = res.status;
                         retorno.id = resultado[0].id;
+                        retorno.status = 200;
                         
                         console.log(retorno)
                         res.status(201).json(retorno);
                     }else{
                         res.status(500).json({message: 'Login inválido!'});
                     }
-    
-    
                     
                 }
             });
@@ -64,14 +63,8 @@ module.exports = (app) => {
     });
      
 
-
-
     app.post('/logout', (req, res)=>{
         res.json({ auth: false, token: null });
     });
-
-
-
-      
    
 }

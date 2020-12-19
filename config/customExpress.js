@@ -8,17 +8,13 @@ const methodOverride	= require('method-override');
 require("dotenv-safe").config();
 const jwt               = require('jsonwebtoken');
 
-
-
 module.exports = () => {
 
 	var cors = require('cors');
 	const app = express();
-
-	
-
 	app.use(cors({origin: '*'}));
 	app.use(cookieParser('gefi'));
+
 	app.use(expressSession());
 	app.use(bodyParser.json())
 	app.use(express.static(process.cwd()+"/public/gefi-web/dist/gefi-web/"));

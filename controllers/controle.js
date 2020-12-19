@@ -1,31 +1,22 @@
 const Controle = require('../models/controle')
+const Equipamento = require('../models/equipamentos')
 const autenticador	=	require('../middlewares/autenticador');
+
 module.exports = (app) => {
 
-    //const { Equipamento } = app.models.controle;
-
-   // app.get('/', autenticador,(req, res) => res.send('GEFI'));
-
+    const publicFolder = 'process.cwd()+"/public/gefi-web/dist/gefi-web/';
   
    app.get('/controle', (req,res) => {
-    res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+       	res.sendFile(`${publicFolder}/index.html`);
 
     });
 
-
-    app.post('/controles', (req, res) => {
-        const controle = req.body;
-        const dataRetirada = new Date();
-        controle.dataRetirada = dataRetirada;
-        console.log("rota de salvar controle");
-        Controle.adiciona(controle, res);
-    });
-
-
+    
     app.get('/controles', (req, res)=>{
         console.log("rota da lista de controle");
         Controle.lista(res);
     });
+
     
     app.delete('/controles/:id',(req, res)=>{
         console.log("rota deletar controle por id");
@@ -47,6 +38,68 @@ module.exports = (app) => {
         const id = req.param('id');
         Controle.pesquisarPorId(id, res);
     });
+
+
+
+    app.post('/controles', (req, res) => {
+        const controleTemp = req.body;
+        const controle = {};
+        const dataRetirada = new Date();
+        console.log(controleTemp);
+        controle.USUARIO_FK = controleTemp.usuario.id;
+        controle.EQUIPAMENTO_FK = controleTemp.equipamento.id;
+        controle.data_retirada = dataRetirada;
+
+        console.log(controle);
+        console.log("rota de salvar controle");
+        Equipamento.atualizaStatus(controleTemp.equipamento.id, controleTemp.equipamento, res);
+        Controle.adiciona(controle, res);
+
+    });
+
+
+    app.get('/controles/controles/:id', (req, res)=>{
+        console.log("rota - Devolve Equipamento");
+        const id = req.param('id');
+        Controle.devolveEquipamento(res);
+    });
+
+    app.get('/controles/controles/:id', (req, res)=>{
+        console.log("rota - Requisita Equipamento");
+        const id = req.param('id');
+        Controle.requisitaEquipamento(res);
+    });
+
+    app.get('/controles/controles/:id', (req, res)=>{
+        console.log("rota - lista equipamentos disponiveis por área");
+        const id = req.param('id');
+        Controle.listaEquipamentosDisponiveisPorArea(res);
+    });
+
+    app.get('/controles/controles/:id', (req, res)=>{
+        console.log("rota - lista equipamentos requisitados pelo usuário");
+        const id = req.param('id');
+        Controle.listaEquipamentosComFalha(res);
+    });
+
+    app.get('/controles/controles/:id', (req, res)=>{
+        console.log("rota - trata falha");
+        const id = req.param('id');
+        Controle.trataFalha(res);
+    });
+
+    app.get('/controles/listar-equipamentos-com-falha-por-usuario', (req, res)=>{
+        console.log("rota - lista equipamentos com falha");
+        const id = req.param('id');
+        Controle.listaEquipamentosComFalha(res);
+    });
+
+    app.get('/controles/lista-equipamentos-requisitados-por-area', (req, res)=>{
+        console.log("rota - lista requisicoes por área");
+        const id = req.param('id');
+        Controle.listaRequisicoesPorArea(res);
+    });
+
 
  
 

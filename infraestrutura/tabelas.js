@@ -1,29 +1,28 @@
+const csv = require('csv-parser');
+const fs = require('fs');
+
 class Tabelas {
-    init(conexao) {
-        this.conexao = conexao;
+     init(conexao) {
+/*        this.conexao = conexao;
 
         this.criarDepartamentos();
-        this.criarAreas();
         this.criarCargos();
         this.criarUsuarios();
-      
+        
         this.criarEquipamentos();
+        
         this.criarControle();
-       
-        this.inserirDepartamento();
-        this.inserirArea();
-        this.inserirCargos();
-        this.inserirUsuarios();
+        
+         this.inserirCargos();
+         
+        this.inserirDepartamentos();
+         this.inserirEquipamentos();
+        this.inserirUsuarios();*/
 
-        this.inserirEquipamentos();
-        this.criarMeusEquipamentos();
-       
-        
-        
     }
 
     criarDepartamentos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS departamentos (id int NOT NULL AUTO_INCREMENT, sigla VARCHAR(4), descricao VARCHAR(50), PRIMARY KEY(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS departamentos (id int NOT NULL AUTO_INCREMENT, sigla VARCHAR(4) NOT NULL UNIQUE, descricao VARCHAR(200) NOT NULL UNIQUE, PRIMARY KEY(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -34,21 +33,9 @@ class Tabelas {
         })
     }
 
-    criarAreas() {
-        const sql = 'CREATE TABLE IF NOT EXISTS areas (id int NOT NULL AUTO_INCREMENT, departamento_fk INT, descricao VARCHAR(50), PRIMARY KEY(id), foreign key(DEPARTAMENTO_FK) references DEPARTAMENTOS(id))';
-
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('Tabela area criada com sucesso')
-            }
-        })
-
-    }
 
     criarCargos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS cargos (id int NOT NULL AUTO_INCREMENT, descricao varchar(100) NOT NULL, PRIMARY KEY(id))';
+        const sql = 'CREATE TABLE IF NOT EXISTS cargos (id int NOT NULL AUTO_INCREMENT, descricao varchar(200) NOT NULL UNIQUE, PRIMARY KEY(id))';
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -62,7 +49,7 @@ class Tabelas {
 
 
     criarUsuarios() {
-        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(100), matricula varchar(9) UNIQUE, login varchar(20) UNIQUE, senha varchar(20), PRIMARY KEY(id), privilegio VARCHAR(5), cargo_fk int, foreign key(cargo_fk) references cargos(id), area_fk int, foreign key(area_fk) references areas(id), trocar_senha BIT)';
+        const sql = 'CREATE TABLE IF NOT EXISTS usuarios(id int NOT NULL AUTO_INCREMENT, nome varchar(200) NOT NULL UNIQUE, matricula varchar(9) NOT NULL UNIQUE, login varchar(20) NOT NULL UNIQUE, senha varchar(200) NOT NULL, PRIMARY KEY(id), privilegio VARCHAR(6), cargo_fk int NOT NULL, foreign key(cargo_fk) references cargos(id), departamento_fk int NOT NULL, foreign key(departamento_fk) references departamentos(id), trocar_senha TINYINT NOT NULL)';
 
         this.conexao.query(sql, erro => {
             if(erro) { 
@@ -76,8 +63,8 @@ class Tabelas {
 
 
     criarEquipamentos() {
-        const sql = 'CREATE TABLE IF NOT EXISTS equipamentos (id int NOT NULL AUTO_INCREMENT, descricao varchar(50) NOT NULL, fabricante varchar(50), modelo varchar(50) NOT NULL, codigoCPTM varchar(20) NOT NULL UNIQUE, PRIMARY KEY(id), status VARCHAR(20), area_fk int, foreign key(area_fk) references areas(id))'
-
+        const sql = 'CREATE TABLE IF NOT EXISTS equipamentos (id int NOT NULL AUTO_INCREMENT, descricao varchar(200) NOT NULL, fabricante varchar(100), modelo varchar(200) , codigoCPTM varchar(20) UNIQUE, PRIMARY KEY(id), status VARCHAR(20), departamento_fk int not null, foreign key(departamento_fk) references departamentos(id))'
+        //sqltest = 'SELECT campos FROM tabela WHERE  dia BETWEEN STR_TO_DATE( "01/05/2014", "%m/%d/%Y" ) AND STR_TO_DATE( "31/10/2014", "%m/%d/%Y" ) ;'
         this.conexao.query(sql, erro => {
             if(erro) {
                 console.log(erro)
@@ -87,86 +74,9 @@ class Tabelas {
         })
     }
 
-    criarMeusEquipamentos(){
-
-            const sql = 'create table meusEquipamentos(id int primary key auto_increment, usuario_fk int, equipamento_fk int, foreign key(usuario_fk) references usuarios(id), foreign key(equipamento_fk) references equipamentos(id), ultimaRevisao date)'
-
-            this.conexao.query(sql, erro => {
-                if(erro) {
-                    console.log(erro)
-                } else {
-                    console.log('Tabela Equipamentos criada com sucesso')
-                }
-            })
-   
-        }
-
-
-
-
-    
-
-    inserirCargos() {
-        const sql = ` INSERT INTO cargos (
-            descricao
-        ) SELECT 'Técnico em manutencao projeto e obras' WHERE NOT EXISTS (SELECT * FROM cargos WHERE descricao = 'Técnico em manutencao projeto e obras')
-        `;
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('Cargo inserido com sucesso')
-            }
-        })
-    }
-
-    inserirUsuarios() {
-        const sql = 
-            `
-            INSERT INTO usuarios (
-                nome, 
-                matricula,
-                login, 
-                senha,
-                privilegio,
-                cargo_fk,
-                area_fk,
-                trocar_senha
-            ) SELECT 'Fabio Julio', '9200297-0', 'fabiolu', '12345', 'admin', 1, 1, 1 WHERE NOT EXISTS (SELECT * FROM usuarios WHERE login = 'fabiolu')
-            `;
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('Usuário inserido com sucesso')
-            }
-        })
-    }
-
-
-    inserirEquipamentos() {
-        const sql = 
-            `
-            INSERT INTO EQUIPAMENTOS (
-                DESCRICAO, 
-                MODELO,
-                CODIGOCPTM, 
-                FABRICANTE,
-                STATUS
-            ) SELECT 'MULTIMETRO', 'mx-10', '0678784', 'minipa', 'Disponivel' WHERE NOT EXISTS (SELECT * FROM EQUIPAMENTOS WHERE DESCRICAO = 'MULTRIMETRO')
-            `;
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('Usuário inserido com sucesso')
-            }
-        })
-    }
-
 
     criarControle() {
-        const sql = 'CREATE TABLE IF NOT EXISTS controles (id int NOT NULL AUTO_INCREMENT,USUARIO_FK int, EQUIPAMENTO_FK int, data_entrega datetime, data_retirada datetime  , PRIMARY KEY(id), foreign key(usuario_fk) references usuarios(id), foreign key(equipamento_fk) references equipamentos(id))'
+        const sql = 'CREATE TABLE IF NOT EXISTS controles (id int NOT NULL AUTO_INCREMENT,USUARIO_FK int, EQUIPAMENTO_FK int, data_devolucao datetime, data_retirada datetime  , PRIMARY KEY(id), foreign key(usuario_fk) references usuarios(id), foreign key(equipamento_fk) references equipamentos(id))'
 
         this.conexao.query(sql, erro => {
             if(erro) {
@@ -177,42 +87,74 @@ class Tabelas {
         })
     }
 
+    inserirCargos(){
+        fs.createReadStream('infraestrutura/csvs/cargos.csv')
+            .pipe(csv()).on('data', (cargos) => {
+                console.log(cargos)
+                const sql = `insert into cargos(id, descricao) values(${cargos.ID},'${cargos.DESCRICAO}')`;
+                console.log(sql);
+                this.inserirSQL(sql);
+            }).on('end', () => {
+                console.log('CSV file successfully processed');
+        });      
+    }
+
+    inserirUsuarios(){
+        fs.createReadStream('infraestrutura/csvs/usuarios.csv')
+        .pipe(csv()).on('data', (usuario) => {
+            console.log(usuario)
+            const sql = `insert into usuarios(ID,NOME,MATRICULA,LOGIN,SENHA,PRIVILEGIO,CARGO_FK,departamento_FK,TROCAR_SENHA) `+
+            `values(${usuario.ID},'${usuario.NOME}', '${usuario.MATRICULA}','${usuario.LOGIN}',`+
+            `'${usuario.SENHA}','${usuario.PRIVILEGIO}', ${usuario.CARGO_FK}, ${usuario.AREA_FK}, ${usuario.TROCAR_SENHA})`;
+
+            console.log(sql);
+           this.inserirSQL(sql);
+        }).on('end', () => {
+            console.log('CSV file successfully processed');
+    });   
+    }
+
+   async inserirDepartamentos(){
+        fs.createReadStream('infraestrutura/csvs/departamentos.csv')
+        .pipe(csv()).on('data', (departamento) => {
+            console.log(departamento)
+            const sql = `insert into departamentos(id,sigla,descricao) values(${departamento.id},'${departamento.SIGLA}','${departamento.DESCRICAO}');`;
+            console.log(sql);
+            this.inserirSQL(sql);
+        }).on('end', () => {
+            console.log('CSV file successfully processed');
+    });  
+    }
+
+    inserirEquipamentos(){
+        fs.createReadStream('infraestrutura/csvs/equipamentos.csv')
+        .pipe(csv()).on('data', (equipamento) => {
+            console.log(equipamento);
+            const sql = `insert into equipamentos(id,codigoCPTM,DESCRICAO,Fabricante,Modelo,status,departamento_FK) `+ 
+                `values(${equipamento.id},'${equipamento.codigoCPTM}','${equipamento.DESCRICAO}',`+
+                `'${equipamento.Fabricante}','${equipamento.Modelo}','${equipamento.status}',${equipamento.AREA_FK})`;
+                console.log(sql);
+                this.inserirSQL(sql);
+        }).on('end', () => {
+            console.log('CSV file successfully processed');
+        });   
+}
+
+   async inserirSQL(sql){
+        await this.conexao.query(sql, erro => {
+            if(erro) {
+                console.log(erro)
+            } else {
+                console.log('Inserido com sucesso')
+            }
+        })
+    }
+
 
     
-    inserirDepartamento() {
-        const sql = 
-            `
-            INSERT INTO DEPARTAMENTOS (
-                SIGLA,
-                DESCRICAO
-            ) SELECT 'DORO', 'DEPARTAMENTO DORO'  WHERE NOT EXISTS (SELECT * FROM DEPARTAMENTOS WHERE SIGLA = 'DORO')
-            `;
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('Departamento inserido com sucesso')
-            }
-        })
-    }
 
-    inserirArea() {
-        const sql = 
-            `
-            INSERT INTO AREAS (
-                DESCRICAO,
-                departamento_fk
-            ) SELECT 'LABORATORIO DE SISTEMAS ELETRONICOS', 1 WHERE NOT EXISTS (SELECT * FROM AREAS WHERE DESCRICAO = 'LABORATORIO DE SISTEMAS ELETRONICOS')
-            `;
-        this.conexao.query(sql, erro => {
-            if(erro) {
-                console.log(erro)
-            } else {
-                console.log('Area inserida com sucesso')
-            }
-        })
-    }
 
+   
     
 
 

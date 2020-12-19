@@ -1,12 +1,13 @@
 const Equipamento = require('../models/equipamentos')
 const autenticador	=	require('../middlewares/autenticador');
+
 module.exports = (app) => {
 
-    //const { Equipamento } = app.models.equipamentos;
+    const publicFolder = 'process.cwd()+"/public/gefi-web/dist/gefi-web/';
 
 
     app.get('/equipamento', (req,res) => {
-		res.sendFile(process.cwd()+"/public/gefi-web/dist/gefi-web/index.html")
+		res.sendFile(`${publicFolder}/index.html`);
 	});
 
 

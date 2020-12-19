@@ -26,18 +26,6 @@ class Equipamento {
         });
     }
 
-    lista(res){
-        const sql ='SELECT *FROM EQUIPAMENTOS';
-        conexao.query(sql,[], (erro, resultado) =>{
-            if(erro){
-                res.status(400).json(erro);
-            }else{
-                res.status(201).json(resultado);
-            }    
-        });
-    }
-
-   
     atualiza(id, equipamento, res){
         const sql = 'update equipamentos set ? where id = ?';
         conexao.query(sql, [equipamento, id], (erro, resultado)=>{
@@ -50,7 +38,19 @@ class Equipamento {
     }
 
 
+    lista(res){
+        const sql ='SELECT *FROM EQUIPAMENTOS';
+        conexao.query(sql,[], (erro, resultado) =>{
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(resultado);
+            }    
+        });
+    }
 
+
+   
     pesquisarPorId(id, res){
         const sql = `SELECT * FROM equipamentos WHERE id=${id}`;
        
@@ -63,6 +63,9 @@ class Equipamento {
             }
         });
     }
+
+
+
 
    
 }

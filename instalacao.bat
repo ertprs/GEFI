@@ -1,3 +1,13 @@
+instala mysql
+instala nodejs
+instala git
+instala github
+altera usuario mysql
+baixa pacote
+starta aplicacao
+cria icone de inicializacao na area de trabalho
+inicializa a aplicacao
+
 
 #sudo apt update
 #sudo apt upgrade
