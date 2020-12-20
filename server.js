@@ -7,7 +7,7 @@ conexao.connect(erro => {
         console.log(erro)
     } else {
         console.log('conectado com sucesso');
-       Tabelas.init(conexao);
+       // Tabelas.init(conexao);
         
         const app = customExpress();
         
@@ -23,4 +23,4 @@ conexao.connect(erro => {
 
      
     }
-})
+});

@@ -10,114 +10,64 @@ module.exports = (app) => {
        	res.sendFile(`${publicFolder}/index.html`);
 
     });
-
     
-    app.get('/controles', (req, res)=>{
-        console.log("rota da lista de controle");
-        Controle.lista(res);
+    app.post('/falhadoequipamento', (req, res)=>{
+        const equipamentocomfalha = req.body;
+        console.log(equipamentocomfalha)
+        equipamentocomfalha.datarevisao = new Date();
+        console.log(`rota - adicionafalhadoequipamento/${equipamentocomfalha}`);
+        Controle.adicionaFalhaDoEquipamento(res, equipamentocomfalha);
     });
 
-    
-    app.delete('/controles/:id',(req, res)=>{
-        console.log("rota deletar controle por id");
-        const id = req.body.id;
-        Controle.deleta(id, res);
+    app.patch('/falhadoequipamento', (req, res)=>{
+        const equipamentocomfalha = req.body;
+        equipamentocomfalha.datarevisao = new Date();
+        console.log(`rota - atualizafalhadoequipamento/${equipamentocomfalha}`);
+        Controle.atualizaFalhaDoEquipamento(res, equipamentocomfalha);
     });
 
+    app.get('/listafalhadoequipamento', (req, res)=>{
+        const equipamentocomfalha = {};
+        equipamentocomfalha.status = parseInt(req.query.status);
+        equipamentocomfalha.departamento_fk = parseInt(req.query.departamento_fk);
+        console.log(`rota - listafalhadoequipamento/${equipamentocomfalha}`);
+        Controle.listaFalhaDoEquipamento(res, equipamentocomfalha);
+    });
 
-    app.put('/controles', (req,res) =>{
-        console.log("rota de atualizar o controle");
+    app.post('/controle', (req, res)=>{
         const controle = req.body;
-        Controle.atualiza(controle, id, res);
-     
+        controle.status = 0;
+        controle.data_retirada = new Date();
+        console.log(`rota - adicionaControle/${controle}`);
+        Controle.adicionaControle(res, controle);
     });
 
+    app.patch('/controle', (req, res)=>{
+            const controle = {};
+            id = parseInt(req.body.id);
+            controle.equipamento_fk = parseInt(req.body.equipamento_fk);
+            controle.colaborador_fk = parseInt(req.body.colaborador_fk);
+            controle.status = 1;
+            controle.data_devolucao = new Date();
+            console.log(`rota - atualizacontrole/${controle}`);
+            Controle.atualizaControle(res, controle, id);
+        });
 
-    app.get('/controles/:id', (req, res)=>{
-        console.log("rota da pesquisa de controle por id");
-        const id = req.param('id');
-        Controle.pesquisarPorId(id, res);
-    });
-
-
-
-    app.post('/controles', (req, res) => {
-        const controleTemp = req.body;
+  
+    app.get('/listacontroleporarea', (req, res)=>{
         const controle = {};
-        const dataRetirada = new Date();
-        console.log(controleTemp);
-        controle.USUARIO_FK = controleTemp.usuario.id;
-        controle.EQUIPAMENTO_FK = controleTemp.equipamento.id;
-        controle.data_retirada = dataRetirada;
-
-        console.log(controle);
-        console.log("rota de salvar controle");
-        Equipamento.atualizaStatus(controleTemp.equipamento.id, controleTemp.equipamento, res);
-        Controle.adiciona(controle, res);
+        controle.status = parseInt(req.query.status);
+        controle.departamento_fk = parseInt(req.query.departamento_fk);
+        console.log(`rota - listacontroleporarea/${controle}`);
+        Controle.listaControlePorArea(res, controle);
 
     });
 
-
-    app.get('/controles/devolver-equipamento', (req, res)=>{
-        console.log("rota - Devolve Equipamento");
-        const id = req.param('id');
-        Controle.devolveEquipamento(res);
-    });
-
-
-    app.get('/controles/requisitar-equipamento', (req, res)=>{
-        console.log("rota - Requisita Equipamento");
-        const id = req.param('id');
-        Controle.requisitaEquipamento(res);
-    });
-
-    
-
-    app.get('/controles/listar-equipamentos-disponiveis-por-area', (req, res)=>{
-        console.log("rota - lista equipamentos disponiveis por área");
-        const id = req.param('id');
-        Controle.listaEquipamentosDisponiveisPorArea(res);
-    });
-
-
-    app.get('/controles/listar-equipamentos-requisitados-por-usuario', (req, res)=>{
-        console.log("rota - lista equipamentos requisitados pelo usuário");
-        const id = req.param('id');
-        Controle.listaEquipamentosRequisitadosPeloUsuario(res);
-    });
-
-
-
-    app.get('/controles/tratar-falha', (req, res)=>{
-        console.log("rota - trata falha");
-        const id = req.param('id');
-        Controle.trataFalha(res);
-    });
-
-    app.get('/controles/listar-equipamentos-com-falha-por-usuario', (req, res)=>{
-        console.log("rota - lista equipamentos com falha");
-        const id = req.param('id');
-        Controle.listaEquipamentosComFalhaPorArea(res);
-    });
-
-    app.get('/controles/lista-equipamentos-requisitados-por-area', (req, res)=>{
-        console.log("rota - lista requisicoes por área");
-        const id = req.param('id');
-        Controle.listaRequisicoesPorArea(res);
-    });
-
-    app.get('/controles/notifica-gestor', (req, res)=>{
-        console.log("rota - lista requisicoes por área");
-        const id = req.param('id');
-        Controle.notificaGestor(res);
-    });
-
-
-
- 
-
-
-
-
-
+    app.get('/listacontroleporusuario', (req, res)=>{
+        const controle = {};
+        controle.status = parseInt(req.query.status);
+        controle.colaborador_fk = parseInt(req.query.colaborador_fk);
+        console.log(`rota - listacontroleporcolaborador/${controle.colaborador_fk}`);
+        Controle.listaControlePorUsuario(res, controle);
+    });   
 }

@@ -26,6 +26,7 @@ module.exports = (app) => {
 
         login = req.body.login;
         senha = req.body.senha;
+        
         console.log("here");
         if(login && senha){
             const sql = 'select *from usuarios where login = ? and senha = ? ';

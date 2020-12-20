@@ -24,6 +24,11 @@ module.exports = (app) => {
         Equipamento.lista(res);
     });
 
+    app.get('/equipamentos/:id', (req, res)=>{
+        console.log("rota de pesquisa de equipamentos");
+        Equipamento.lista(res);
+    });
+
     //ok
     app.delete('/equipamentos/:id',(req, res)=>{
         const id = parseInt(req.params.id);
