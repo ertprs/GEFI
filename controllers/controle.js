@@ -26,12 +26,20 @@ module.exports = (app) => {
         Controle.atualizaFalhaDoEquipamento(res, equipamentocomfalha);
     });
 
-    app.get('/listafalhadoequipamento', (req, res)=>{
+    app.get('/listafalhadoequipamentopordepartamento', (req, res)=>{
         const equipamentocomfalha = {};
         equipamentocomfalha.status = parseInt(req.query.status);
         equipamentocomfalha.departamento_fk = parseInt(req.query.departamento_fk);
-        console.log(`rota - listafalhadoequipamento/${equipamentocomfalha}`);
-        Controle.listaFalhaDoEquipamento(res, equipamentocomfalha);
+        console.log(`rota - listafalhadoequipamentoporcalobrador/${equipamentocomfalha}`);
+        Controle.listaFalhaDoEquipamentoPorDepartamento(res, equipamentocomfalha);
+    });
+
+    app.get('/listafalhadoequipamentoporcolaborador', (req, res)=>{
+        const equipamentocomfalha = {};
+        equipamentocomfalha.status = parseInt(req.query.status);
+        equipamentocomfalha.colaborador_fk = parseInt(req.query.colaborador_fk);
+        console.log(`rota - listafalhadoequipamentoporcalobadorador/${equipamentocomfalha}`);
+        Controle.listaFalhaDoEquipamentoPorColaborador(res, equipamentocomfalha);
     });
 
     app.post('/controle', (req, res)=>{
@@ -54,7 +62,7 @@ module.exports = (app) => {
         });
 
   
-    app.get('/listacontroleporarea', (req, res)=>{
+    app.get('/listacontrolepordepartamento', (req, res)=>{
         const controle = {};
         controle.status = parseInt(req.query.status);
         controle.departamento_fk = parseInt(req.query.departamento_fk);
@@ -63,7 +71,7 @@ module.exports = (app) => {
 
     });
 
-    app.get('/listacontroleporusuario', (req, res)=>{
+    app.get('/listacontroleporcolaborador', (req, res)=>{
         const controle = {};
         controle.status = parseInt(req.query.status);
         controle.colaborador_fk = parseInt(req.query.colaborador_fk);

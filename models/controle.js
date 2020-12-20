@@ -40,12 +40,28 @@ class Controle {
 
 }
 
-    listaFalhaDoEquipamento(res, equipamentocomfalha){
+    listaFalhaDoEquipamentoPorDepartamento(res, equipamentocomfalha){
 
         const sql = `SELECT * FROM equipamentoscomfalhas where status = ? and departamento_fk = ?`;
     
         conexao.query(sql,[equipamentocomfalha.status,
              equipamentocomfalha.departamento_fk], (erro, resultado) =>{
+            const equipamentosComFalhas = resultado;
+            if(erro){
+                res.status(400).json(erro);
+            }else{
+                res.status(201).json(equipamentosComFalhas);
+            }
+        });
+
+    }
+
+    listaFalhaDoEquipamentoPorColaborador(res, equipamentocomfalha){
+
+        const sql = `SELECT * FROM equipamentoscomfalhas where status = ? and colaborador_fk = ?`;
+    
+        conexao.query(sql,[equipamentocomfalha.status,
+             equipamentocomfalha.colaborador_fk], (erro, resultado) =>{
             const equipamentosComFalhas = resultado;
             if(erro){
                 res.status(400).json(erro);
